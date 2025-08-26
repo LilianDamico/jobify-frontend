@@ -5,8 +5,9 @@ import axios, { AxiosError } from "axios";
  * Base URL do backend (FastAPI).
  * Em dev, defina em .env.local:
  *   NEXT_PUBLIC_API_URL=http://127.0.0.1:8000
+ * Em produção, usa o backend do Render por padrão.
  */
-const BASE = (process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000").replace(
+const BASE = (process.env.NEXT_PUBLIC_API_URL ?? "https://backend-py-fu8j.onrender.com").replace(
   /\/$/,
   ""
 );
