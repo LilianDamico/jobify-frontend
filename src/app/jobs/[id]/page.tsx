@@ -5,8 +5,8 @@ import { notFound, redirect } from "next/navigation";
 type JobDetail = {
   id: string;
   title: string;
-  company: string | null; // Mudança aqui: permitir null
-  category: string | null; // Mudança aqui: permitir null
+  company: string | null; // ✅ Permitir null
+  category: string | null; // ✅ Permitir null
   job_type?: string | null;
   location?: string | null;
   url: string;
