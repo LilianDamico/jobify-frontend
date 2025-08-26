@@ -4,20 +4,10 @@
 import JobCard from "@/components/ui/JobCard";
 import JobCardSkeleton from "@/components/ui/JobCardSkeleton";
 import { useFavorites } from "@/hooks/favorites";
+import type { UiJob } from "@/lib/api";
 
-/** Formato que o <JobCard/> espera */
-type CardJob = {
-  id: string;
-  title: string;
-  company: string;
-  category: string;
-  job_type?: string | null;
-  location?: string | null;
-  url: string;
-  published_at?: string | null;
-  is_favorite?: boolean;
-  tags?: string[];
-};
+/** Usar o mesmo tipo UiJob que o JobCard espera */
+type CardJob = UiJob;
 
 /** Possível forma da resposta do backend */
 type ApiList<T> = { items: T[] };
@@ -72,16 +62,18 @@ function normalizeJob(src: UnknownRecord): CardJob {
     toStringStrict(src.position) ||
     "Vaga";
 
+  // Corrigir: company pode ser null/undefined
   const company =
     toStringStrict(src.company) ||
     toStringStrict(src.company_name) ||
     toStringStrict(src.companyName) ||
-    "";
+    null; // Mudança aqui: null em vez de ""
 
+  // Corrigir: category pode ser null/undefined  
   const category =
     toStringStrict(src.category) ||
     toStringStrict(src.job_category) ||
-    "";
+    null; // Mudança aqui: null em vez de ""
 
   const job_type =
     (toStringOrNull(src.job_type) ?? toStringOrNull(src.type)) || null;
