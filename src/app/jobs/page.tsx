@@ -1,10 +1,10 @@
 // src/app/jobs/page.tsx
 "use client";
 
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useJobs } from "@/hooks/jobs";       // seu hook já existente
-import type { UiJob } from "@/lib/api";       // tipagem normalizada
+import { useJobs } from "@/hooks/jobs";
+import type { UiJob } from "@/lib/api";
 import JobCard from "@/components/ui/JobCard";
 
 function useQueryState() {
@@ -24,7 +24,7 @@ function useQueryState() {
   return { searchParams, set };
 }
 
-export default function JobsPage() {
+function JobsContent() {
   const { searchParams, set } = useQueryState();
 
   const q = searchParams?.get("q") ?? "";
@@ -143,5 +143,13 @@ export default function JobsPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function JobsPage() {
+  return (
+    <Suspense fallback={<div className="card skeleton h-40" />}>
+      <JobsContent />
+    </Suspense>
   );
 }

@@ -15,7 +15,7 @@ export default function JobCard({ job }: JobCardProps) {
     job_type,
     location,
     published_at,
-    is_favorite,
+    // is_favorite, // ← Remover esta linha
     tags,
   } = job;
 
